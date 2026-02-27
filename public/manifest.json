@@ -1,0 +1,44 @@
+{
+  "name": "Playzor - India's #1 Premium Game Server Hosting",
+  "short_name": "Playzor",
+  "description": "India's #1 Minecraft & game server hosting. Ryzen 9, NVMe SSD, DDoS protection, 99.9% uptime. Starting ₹199/mo. Instant setup, unlimited slots, 24/7 support.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["games", "hosting", "technology"],
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Order Now",
+      "short_name": "Order",
+      "description": "Buy Minecraft Server Hosting",
+      "url": "https://checkout.playzor.me",
+      "icons": [{ "src": "/logo.png", "sizes": "512x512" }]
+    },
+    {
+      "name": "Pricing Plans",
+      "short_name": "Pricing",
+      "description": "View Hosting Plans from ₹199/mo",
+      "url": "/#pricing"
+    },
+    {
+      "name": "Partner Program",
+      "short_name": "Partners",
+      "description": "Join Playzor Partner Program",
+      "url": "/partners"
+    }
+  ]
+}
