@@ -47,6 +47,7 @@ export default function Reviews() {
   return (
     <section
       id="reviews"
+      aria-label="Playzor Customer Reviews and Testimonials"
       className="py-16 sm:py-24 md:py-32 bg-[#050505] relative overflow-hidden"
     >
       {/* Background Glow */}
@@ -55,11 +56,10 @@ export default function Reviews() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center mb-10 sm:mb-16 md:mb-20">
           <h2 className="text-2xl sm:text-4xl md:text-6xl font-display font-bold text-white mb-3 sm:mb-6">
-            Reputable Servers.
+            Trusted by 500+ Gamers
           </h2>
           <p className="text-zinc-400 text-sm sm:text-lg max-w-2xl mx-auto mb-6 sm:mb-8 px-2 sm:px-0">
-            See what our community has to say about their experience with
-            Playzor.
+            See what our community has to say about their Playzor hosting experience.
           </p>
 
           {/* Trustpilot Professional CTA */}

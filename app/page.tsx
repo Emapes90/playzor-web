@@ -5,14 +5,15 @@ import Locations from "@/components/Locations";
 import Pricing from "@/components/Pricing";
 import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
+import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title:
-    "Playzor™ - India's #1 Best Minecraft Server Hosting | Game Hosting ₹199/mo | DDoS Protected | NVMe SSD",
+    "Playzor - India's #1 Minecraft Server Hosting | Premium Game Server Hosting Rs.199/mo | NVMe SSD | DDoS Protected",
   description:
-    "🎮 Playzor™ is India's #1 Minecraft & game server hosting. ⚡ Ryzen 9 + NVMe SSD + DDoS Protection + 99.9% Uptime. Starting ₹199/mo. Instant setup, unlimited slots, 24/7 expert support, free subdomain. Java + Bedrock + Forge + Fabric + Paper + Modpacks. Servers in India (Mumbai) & Singapore. Best alternative to GBNodes, BisectHosting, Apex, Shockbyte. 500+ happy gamers. Cheapest premium Minecraft hosting in India 2025.",
+    "Playzor is India's number one Minecraft and game server hosting provider. AMD Ryzen 9 7950X processors, NVMe SSD storage, enterprise DDoS protection, and 99.9% uptime guarantee. Starting Rs.199/month with instant setup, unlimited player slots, 24/7 expert support, and free subdomain. Full support for Java, Bedrock, Forge, Fabric, Paper, Spigot, Purpur, and all popular modpacks including Pixelmon, RLCraft, and FTB. Server locations in India (Mumbai) and Singapore for ultra-low ping. Trusted by 500+ gamers across India. The best premium yet affordable Minecraft hosting in India 2026.",
   alternates: {
     canonical: "https://playzor.me",
   },
@@ -104,6 +105,27 @@ export default function Home() {
           "Multiplayer Gaming",
           "Pterodactyl Panel",
           "Linux Server Administration",
+          "Minecraft Java Edition",
+          "Minecraft Bedrock Edition",
+          "Game Server Infrastructure",
+          "NVMe SSD Storage",
+          "AMD Ryzen Processors",
+          "Server Virtualization",
+          "Network Security",
+          "Web Hosting",
+          "Cloud Computing",
+          "Containerization",
+          "Gaming Infrastructure",
+          "Minecraft Modpack Hosting",
+          "Forge Server Hosting",
+          "Fabric Server Hosting",
+          "Paper Server Hosting",
+          "ARK Server Hosting",
+          "Rust Server Hosting",
+          "Palworld Server Hosting",
+          "Valheim Server Hosting",
+          "FiveM Server Hosting",
+          "Terraria Server Hosting",
         ],
         offers: { "@id": "https://playzor.me/#offers" },
         sameAs: [],
@@ -119,9 +141,14 @@ export default function Home() {
           "Playzor Hosting",
           "Playzor Game Hosting",
           "Playzor.me",
+          "Playzor Minecraft Hosting",
+          "Playzor Server Hosting",
+          "Playzor India",
+          "Playzor Game Server",
+          "Playzor Premium Hosting",
         ],
         description:
-          "India's #1 premium Minecraft and game server hosting. Ryzen 9, NVMe SSD, DDoS protection, 99.9% uptime. Starting ₹199/mo.",
+          "India's leading premium Minecraft and game server hosting provider. AMD Ryzen 9 7950X processors, NVMe SSD, enterprise DDoS protection, 99.9% uptime. Plans starting Rs.199/month.",
         publisher: { "@id": "https://playzor.me/#organization" },
         inLanguage: ["en-IN", "en"],
         potentialAction: [
@@ -143,9 +170,9 @@ export default function Home() {
         "@type": ["WebPage", "CollectionPage"],
         "@id": "https://playzor.me/#webpage",
         url: "https://playzor.me",
-        name: "Playzor™ - India's #1 Best Minecraft Server Hosting | Game Hosting ₹199/mo",
+        name: "Playzor - India's #1 Minecraft Server Hosting | Premium Game Hosting Rs.199/mo",
         description:
-          "India's best & cheapest Minecraft server hosting. Ryzen 9 NVMe servers, DDoS protection, 99.9% uptime. Starting ₹199/mo. Better than GBNodes, BisectHosting, Apex, Shockbyte.",
+          "India's best and most affordable Minecraft server hosting. AMD Ryzen 9 7950X, NVMe SSD servers, enterprise DDoS protection, 99.9% uptime guarantee. Starting Rs.199/month. Instant setup, unlimited player slots, and 24/7 expert support.",
         isPartOf: { "@id": "https://playzor.me/#website" },
         about: { "@id": "https://playzor.me/#organization" },
         inLanguage: "en-IN",
@@ -955,7 +982,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+    <main
+      role="main"
+      aria-label="Playzor - India's Leading Minecraft and Game Server Hosting"
+      className="min-h-screen bg-black text-white selection:bg-white selection:text-black"
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -967,6 +998,7 @@ export default function Home() {
       <Pricing />
       <Reviews />
       <FAQ />
+      <BlogSection />
       <Footer />
     </main>
   );

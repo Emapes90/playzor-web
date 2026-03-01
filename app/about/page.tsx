@@ -16,7 +16,7 @@ import {
 
 export default function About() {
   return (
-    <main className="bg-black min-h-screen">
+    <main role="main" aria-label="About Playzor - India's Leading Game Server Hosting Company" className="bg-black min-h-screen">
       <Navbar />
 
       {/* Hero Section */}

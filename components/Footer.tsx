@@ -6,6 +6,7 @@ export default function Footer() {
   return (
     <footer
       id="footer"
+      aria-label="Playzor Game Server Hosting - Footer"
       className="bg-black border-t border-white/10 pt-10 sm:pt-16 pb-6 sm:pb-8"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -24,9 +25,10 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-zinc-500 max-w-sm mb-4 sm:mb-6 text-sm sm:text-base">
-              Premium Minecraft hosting solutions designed for performance,
-              reliability, and scale. Built for communities that demand the
-              best.
+              Playzor is India's leading premium Minecraft server hosting and
+              game server hosting provider. Powered by AMD Ryzen 9 processors,
+              NVMe SSD storage, and enterprise DDoS protection with servers in
+              India and Singapore.
             </p>
             <div className="flex gap-4">
               <a
@@ -34,6 +36,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-red-500 transition-colors"
+                aria-label="Playzor YouTube Channel"
               >
                 <Youtube className="w-5 h-5" />
               </a>
@@ -42,6 +45,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-indigo-400 transition-colors"
+                aria-label="Playzor Discord Community"
               >
                 <MessageCircle className="w-5 h-5" />
               </a>
@@ -49,7 +53,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-bold text-sm sm:text-base mb-3 sm:mb-6">Services</h4>
+            <h4 className="text-white font-bold text-sm sm:text-base mb-3 sm:mb-6">
+              Services
+            </h4>
             <ul className="space-y-2 sm:space-y-4">
               <li>
                 <a
@@ -65,7 +71,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-bold text-sm sm:text-base mb-3 sm:mb-6">Company</h4>
+            <h4 className="text-white font-bold text-sm sm:text-base mb-3 sm:mb-6">
+              Company
+            </h4>
             <ul className="space-y-2 sm:space-y-4">
               <li>
                 <Link
@@ -83,11 +91,21 @@ export default function Footer() {
                   Partners
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/blog"
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  Blog
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-bold text-sm sm:text-base mb-3 sm:mb-6">Policies</h4>
+            <h4 className="text-white font-bold text-sm sm:text-base mb-3 sm:mb-6">
+              Policies
+            </h4>
             <ul className="space-y-2 sm:space-y-4">
               <li>
                 <Link
@@ -141,7 +159,7 @@ export default function Footer() {
           </div>
         </div>
 
-          <div className="border-t border-white/10 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-white/10 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-zinc-600 text-[11px] sm:text-sm text-center md:text-left leading-relaxed w-full md:w-auto">
             © {new Date().getFullYear()} Playzor Technologies. All rights
             reserved. Not affiliated with Mojang Studios.

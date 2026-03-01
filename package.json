@@ -10,8 +10,10 @@
     "clean": "next clean"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1000.0",
     "@google/genai": "^1.17.0",
     "@hookform/resolvers": "^5.2.1",
+    "@supabase/supabase-js": "^2.98.0",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -21,6 +23,11 @@
     "postcss": "^8.5.6",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
+    "react-markdown": "^10.1.0",
+    "rehype-highlight": "^7.0.2",
+    "rehype-raw": "^7.0.0",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

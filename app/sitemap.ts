@@ -12,6 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
+      url: `${baseUrl}/about`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/partners`,
       lastModified: now,
       changeFrequency: "weekly",
@@ -21,44 +27,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/terms`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.4,
+      priority: 0.5,
     },
     {
       url: `${baseUrl}/privacy`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.4,
+      priority: 0.5,
     },
     {
       url: `${baseUrl}/refund`,
       lastModified: now,
       changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/sla`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/aup`,
+      lastModified: now,
+      changeFrequency: "monthly",
       priority: 0.4,
     },
-    // Hash-based sections (helps Google understand page structure)
     {
-      url: `${baseUrl}/#pricing`,
+      url: `${baseUrl}/dmca`,
       lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.95,
+      changeFrequency: "monthly",
+      priority: 0.4,
     },
     {
-      url: `${baseUrl}/#features`,
+      url: `${baseUrl}/blog`,
       lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/#reviews`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#faq`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.75,
+      changeFrequency: "daily",
+      priority: 0.9,
     },
   ];
 }

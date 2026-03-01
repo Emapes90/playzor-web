@@ -6,14 +6,14 @@ import { Star } from 'lucide-react';
 
 export default function Features() {
   return (
-    <section id="features" className="py-16 sm:py-24 bg-black relative overflow-hidden">
+    <section id="features" aria-label="Playzor Minecraft Hosting Features" className="py-16 sm:py-24 bg-black relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white mb-3 sm:mb-4">
             Engineered for Performance
           </h2>
           <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base px-2 sm:px-0">
-            We don&apos;t cut corners. Every server is optimized for the best possible Minecraft experience.
+            We don&apos;t cut corners. Every Minecraft server is built on Ryzen 9 and NVMe SSD for the best possible gaming experience.
           </p>
         </div>
 

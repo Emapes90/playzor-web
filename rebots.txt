@@ -1,20 +1,19 @@
 # Playzor - India's #1 Game Server Hosting
 # https://playzor.me
 
-# Allow all search engine crawlers
+# Allow all search engine crawlers full access
 User-agent: *
 Allow: /
-Allow: /partners
-Allow: /terms
-Allow: /privacy
-Allow: /refund
 Disallow: /api/
 Disallow: /_next/static/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /staging/
+Disallow: /test/
 
-# Google
+# Google - Full Crawl Access
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
 
 User-agent: Googlebot-Image
 Allow: /
@@ -28,36 +27,31 @@ Allow: /
 User-agent: Storebot-Google
 Allow: /
 
-# Bing
-User-agent: *
+User-agent: Google-InspectionTool
 Allow: /
-Sitemap: https://playzor.com/sitemap.xml
 
-# Block sensitive folders
-Disallow: /admin/
-Disallow: /api/
-Disallow: /private/
-
-# SEO best practices
-Crawl-delay: 10
-
-# Allow Googlebot full access
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 5
-
-# Allow Bingbot full access
+# Bing - Full Crawl Access
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 5
 
-# Extra: Block duplicate content and temp files
-Disallow: /*?*
-Disallow: /*.tmp$
+User-agent: msnbot
+Allow: /
 
-# Extra: Block staging and test folders
-Disallow: /staging/
-Disallow: /test/
+# Yahoo
+User-agent: Slurp
+Allow: /
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
 
 # Apple
 User-agent: Applebot
@@ -124,6 +118,18 @@ User-agent: MJ12bot
 Allow: /
 
 User-agent: DotBot
+Allow: /
+
+User-agent: rogerbot
+Allow: /
+
+User-agent: Screaming Frog SEO Spider
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
+User-agent: redditbot
 Allow: /
 
 # Sitemaps

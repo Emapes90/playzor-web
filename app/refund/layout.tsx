@@ -1,21 +1,29 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Refund Policy | Playzor - India's #1 Game Server Hosting",
+  title:
+    "Refund Policy | Playzor - Premium Minecraft and Game Server Hosting India",
   description:
-    "Playzor Refund Policy. Transparent and fair refund process for Minecraft and game server hosting. Money-back guarantee for India's most trusted game hosting provider. No questions asked within eligibility period.",
+    "Playzor Refund Policy. Transparent and fair refund process for Minecraft and game server hosting. Money-back guarantee for India's most trusted premium game hosting provider. Hassle-free cancellation and refund within the eligibility period.",
   keywords: [
     "Playzor refund",
     "Playzor refund policy",
     "Playzor money back",
     "Playzor money back guarantee",
     "Playzor cancellation",
+    "Playzor cancel subscription",
+    "Playzor cancel plan",
     "game hosting refund India",
     "Minecraft hosting refund policy",
-    "Playzor cancel subscription",
     "game server refund",
     "Minecraft hosting money back",
     "Playzor billing",
+    "Playzor payment",
+    "how to cancel Playzor",
+    "Playzor refund process",
+    "Playzor guarantee",
+    "game hosting cancellation India",
+    "Minecraft server refund India",
   ],
   alternates: {
     canonical: "https://playzor.me/refund",

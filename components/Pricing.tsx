@@ -6,14 +6,14 @@ import { Check, Cpu, HardDrive, MemoryStick, Database } from "lucide-react";
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-16 sm:py-24 bg-black">
+    <section id="pricing" aria-label="Playzor Minecraft Hosting Plans and Pricing" className="py-16 sm:py-24 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white mb-3 sm:mb-4">
             Select Your Power
           </h2>
           <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base">
-            Transparent pricing. No hidden fees. Instant setup.
+            Transparent pricing starting at Rs.199/month. No hidden fees. Instant server setup.
           </p>
         </div>
 

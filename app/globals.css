@@ -54,19 +54,28 @@ body {
     /* Better prose on mobile */
     .prose {
         font-size: 0.875rem;
-        line-height: 1.7;
+        line-height: 1.8;
     }
     .prose h2 {
-        font-size: 1.15rem;
-        margin-top: 1.5rem;
-        margin-bottom: 0.75rem;
+        font-size: 1.25rem;
+        margin-top: 2em;
+        margin-bottom: 0.75em;
+    }
+    .prose h3 {
+        font-size: 1.1rem;
+        margin-top: 1.75em;
+        margin-bottom: 0.6em;
     }
     .prose ul {
-        padding-left: 1rem;
+        padding-left: 1.25rem;
     }
     .prose li {
-        margin-top: 0.25rem;
-        margin-bottom: 0.25rem;
+        margin-top: 0.3rem;
+        margin-bottom: 0.3rem;
+    }
+    .blog-prose p {
+        margin-bottom: 1em;
+        line-height: 1.8;
     }
 }
 
@@ -76,6 +85,54 @@ body {
 .overflow-x-auto,
 .overflow-y-auto {
     -webkit-overflow-scrolling: touch;
+}
+
+
+/* Blog prose - professional spacing */
+
+.blog-prose p {
+    margin-bottom: 1.25em;
+    line-height: 1.85;
+}
+
+.blog-prose h2 {
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+}
+
+.blog-prose h3 {
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+}
+
+.blog-prose ul,
+.blog-prose ol {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.blog-prose li {
+    margin-top: 0.35em;
+    margin-bottom: 0.35em;
+}
+
+.blog-prose blockquote {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.blog-prose hr {
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
+}
+
+.blog-prose pre {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.blog-prose a {
+    word-break: break-all;
 }
 
 h1,

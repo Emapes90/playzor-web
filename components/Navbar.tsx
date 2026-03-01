@@ -52,7 +52,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2 group">
             <Image
               src="/logo.png"
-              alt="Playzor Logo"
+              alt="Playzor - India's #1 Minecraft and Game Server Hosting"
               width={36}
               height={36}
               className="rounded-full group-hover:scale-110 transition-transform duration-300 w-7 h-7 sm:w-9 sm:h-9"
@@ -110,6 +110,7 @@ export default function Navbar() {
           <button
             className="md:hidden text-white p-1.5 sm:p-2 rounded-full hover:bg-white/10 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle navigation menu"
           >
             {isOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -117,20 +118,20 @@ export default function Navbar() {
 
         {/* Promo Banner - Only on landing page, hidden when mobile menu open */}
         {isHome && !isOpen && (
-        <div className="relative z-10 -mt-4 sm:-mt-5 pt-5 sm:pt-6 pb-1.5 sm:pb-2 px-3 sm:px-6 pointer-events-auto bg-gradient-to-r from-emerald-950/90 to-teal-950/90 backdrop-blur-md border-x border-b border-emerald-500/20 rounded-b-xl sm:rounded-b-2xl shadow-lg flex items-center gap-2 sm:gap-3 transition-transform hover:translate-y-1">
-          <span className="text-[10px] sm:text-[11px] font-medium text-emerald-100/90">
-            <span className="hidden sm:inline">Launch Offer: </span>
-            Get <span className="font-bold text-white">10% OFF</span> your first
-            month
-          </span>
-          <button
-            onClick={copyCode}
-            className="flex items-center gap-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-md transition-all active:scale-95"
-          >
-            <span className="tracking-wider">SAVE10</span>
-            {copied ? <Check size={10} /> : <Copy size={10} />}
-          </button>
-        </div>
+          <div className="relative z-10 -mt-4 sm:-mt-5 pt-5 sm:pt-6 pb-1.5 sm:pb-2 px-3 sm:px-6 pointer-events-auto bg-gradient-to-r from-emerald-950/90 to-teal-950/90 backdrop-blur-md border-x border-b border-emerald-500/20 rounded-b-xl sm:rounded-b-2xl shadow-lg flex items-center gap-2 sm:gap-3 transition-transform hover:translate-y-1">
+            <span className="text-[10px] sm:text-[11px] font-medium text-emerald-100/90">
+              <span className="hidden sm:inline">Launch Offer: </span>
+              Get <span className="font-bold text-white">10% OFF</span> your
+              first month
+            </span>
+            <button
+              onClick={copyCode}
+              className="flex items-center gap-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-md transition-all active:scale-95"
+            >
+              <span className="tracking-wider">SAVE10</span>
+              {copied ? <Check size={10} /> : <Copy size={10} />}
+            </button>
+          </div>
         )}
       </motion.header>
 
@@ -156,23 +157,29 @@ export default function Navbar() {
             {/* Menu content */}
             <div className="flex flex-col flex-1 px-8 pb-10">
               <nav className="flex flex-col gap-1 mb-auto">
-                {["Features", "Locations", "Pricing", "Reviews"].map((item, i) => (
-                  <motion.div
-                    key={item}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                  >
-                    <Link
-                      href={`/#${item.toLowerCase()}`}
-                      className="block py-3 text-2xl font-display font-bold text-white hover:text-zinc-300 active:text-zinc-400 transition-colors"
-                      onClick={() => setIsOpen(false)}
+                {["Features", "Locations", "Pricing", "Reviews"].map(
+                  (item, i) => (
+                    <motion.div
+                      key={item}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05 }}
                     >
-                      {item}
-                    </Link>
-                  </motion.div>
-                ))}
-                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
+                      <Link
+                        href={`/#${item.toLowerCase()}`}
+                        className="block py-3 text-2xl font-display font-bold text-white hover:text-zinc-300 active:text-zinc-400 transition-colors"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item}
+                      </Link>
+                    </motion.div>
+                  ),
+                )}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
                   <Link
                     href="/partners"
                     className="block py-3 text-2xl font-display font-bold text-white hover:text-zinc-300 active:text-zinc-400 transition-colors"
@@ -181,7 +188,11 @@ export default function Navbar() {
                     Partners
                   </Link>
                 </motion.div>
-                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.25 }}>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.25 }}
+                >
                   <Link
                     href="#footer"
                     className="block py-3 text-2xl font-display font-bold text-zinc-400 hover:text-white active:text-zinc-300 transition-colors"

@@ -7,12 +7,12 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-28 sm:pt-20 pb-8 sm:pb-0 overflow-hidden">
+    <section aria-label="Playzor - Premium Minecraft Server Hosting" className="relative min-h-screen flex items-center justify-center pt-28 sm:pt-20 pb-8 sm:pb-0 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/background.png"
-          alt="Background"
+          alt="Playzor Minecraft Server Hosting Background"
           fill
           priority
           unoptimized
@@ -53,10 +53,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-sm sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0"
+          className="text-sm sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0 hero-description"
         >
-          Premium high-performance hosting with top-tier hardware.
-          Unmatched reliability, DDoS protection, and 24/7 expert support.
+          Premium high-performance Minecraft server hosting with top-tier hardware.
+          Unmatched reliability, enterprise DDoS protection, and 24/7 expert support.
         </motion.p>
 
         <motion.div
@@ -113,21 +113,21 @@ export default function Hero() {
           <div className="flex items-center justify-center gap-6 sm:gap-12 md:gap-16 flex-wrap">
             <Image
               src="/companys/aws.svg"
-              alt="AWS"
+              alt="AWS Cloud Infrastructure - Powering Playzor Game Servers"
               width={100}
               height={40}
               className="h-5 sm:h-7 md:h-8 w-auto opacity-40 hover:opacity-100 transition-opacity duration-300 brightness-0 invert"
             />
             <Image
               src="/companys/cloudflare.svg"
-              alt="Cloudflare"
+              alt="Cloudflare DDoS Protection - Enterprise Security for Playzor"
               width={100}
               height={40}
               className="h-5 sm:h-7 md:h-8 w-auto opacity-40 hover:opacity-100 transition-opacity duration-300 brightness-0 invert"
             />
             <Image
               src="/companys/contabo.png"
-              alt="Contabo"
+              alt="Contabo Data Center - Playzor Server Infrastructure"
               width={100}
               height={40}
               className="h-5 sm:h-7 md:h-8 w-auto opacity-40 hover:opacity-100 transition-opacity duration-300 brightness-0 invert"
