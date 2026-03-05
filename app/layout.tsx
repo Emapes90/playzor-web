@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import CookieConsent from "@/components/CookieConsent";
 import LoadingBar from "@/components/LoadingBar";
+import VisitorTracker from "@/components/VisitorTracker";
 import "./globals.css";
 
 const inter = Inter({
@@ -5530,6 +5531,7 @@ export default function RootLayout({
           </div>
         </noscript>
         <LoadingBar />
+        <VisitorTracker />
         {children}
         <CookieConsent />
       </body>

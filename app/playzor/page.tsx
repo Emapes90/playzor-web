@@ -17,12 +17,32 @@ import {
   ChevronDown,
   ExternalLink,
   ImageIcon,
+  MessageSquare,
+  Mail,
+  Phone,
+  Globe,
+  Clock,
+  CheckCircle,
+  Circle,
 } from "lucide-react";
 import type { Blog, BlogFormData } from "@/lib/blog-types";
 import { BLOG_CATEGORIES } from "@/lib/blog-types";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 
 type View = "login" | "dashboard" | "editor";
+type Tab = "blogs" | "messages";
+
+interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  message: string;
+  ip_address: string | null;
+  user_agent: string | null;
+  read: boolean;
+  created_at: string;
+}
 
 const emptyForm: BlogFormData = {
   title: "",
@@ -57,6 +77,15 @@ export default function AdminPanel() {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
 
+  // Messages state
+  const [activeTab, setActiveTab] = useState<Tab>("blogs");
+  const [messages, setMessages] = useState<ContactMessage[]>([]);
+  const [messagesLoading, setMessagesLoading] = useState(false);
+  const [deleteMessageConfirm, setDeleteMessageConfirm] = useState<
+    string | null
+  >(null);
+  const [expandedMessage, setExpandedMessage] = useState<string | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Check if already authenticated
@@ -76,13 +105,10 @@ export default function AdminPanel() {
     checkAuth();
   }, []);
 
-  const showMessage = useCallback(
-    (type: "success" | "error", text: string) => {
-      setMessage({ type, text });
-      setTimeout(() => setMessage(null), 4000);
-    },
-    []
-  );
+  const showMessage = useCallback((type: "success" | "error", text: string) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage(null), 4000);
+  }, []);
 
   const fetchBlogs = useCallback(async () => {
     setLoading(true);
@@ -106,6 +132,63 @@ export default function AdminPanel() {
       fetchBlogs();
     }
   }, [view, fetchBlogs]);
+
+  // Messages functions
+  const fetchMessages = useCallback(async () => {
+    setMessagesLoading(true);
+    try {
+      const res = await fetch("/api/admin/messages");
+      if (res.ok) {
+        const data = await res.json();
+        setMessages(data);
+      }
+    } catch {
+      showMessage("error", "Failed to fetch messages");
+    } finally {
+      setMessagesLoading(false);
+    }
+  }, [showMessage]);
+
+  useEffect(() => {
+    if (view === "dashboard" && activeTab === "messages") {
+      fetchMessages();
+    }
+  }, [view, activeTab, fetchMessages]);
+
+  const handleDeleteMessage = async (id: string) => {
+    try {
+      const res = await fetch(`/api/admin/messages/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        showMessage("success", "Message deleted successfully");
+        fetchMessages();
+      } else {
+        showMessage("error", "Failed to delete message");
+      }
+    } catch {
+      showMessage("error", "Failed to delete message");
+    } finally {
+      setDeleteMessageConfirm(null);
+    }
+  };
+
+  const handleToggleRead = async (id: string, currentRead: boolean) => {
+    try {
+      const res = await fetch(`/api/admin/messages/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ read: !currentRead }),
+      });
+      if (res.ok) {
+        setMessages((prev) =>
+          prev.map((m) => (m.id === id ? { ...m, read: !currentRead } : m)),
+        );
+      }
+    } catch {
+      showMessage("error", "Failed to update message");
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -209,7 +292,7 @@ export default function AdminPanel() {
       if (res.ok) {
         showMessage(
           "success",
-          editingId ? "Blog updated successfully" : "Blog created successfully"
+          editingId ? "Blog updated successfully" : "Blog created successfully",
         );
         setView("dashboard");
         setForm(emptyForm);
@@ -287,9 +370,7 @@ export default function AdminPanel() {
               <FileText className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-white">Playzor Admin</h1>
-            <p className="text-zinc-500 text-sm mt-1">
-              Blog Management Panel
-            </p>
+            <p className="text-zinc-500 text-sm mt-1">Blog Management Panel</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -457,14 +538,18 @@ export default function AdminPanel() {
                   </label>
                   <button
                     type="button"
-                    onClick={() => setShowPreview(p => !p)}
+                    onClick={() => setShowPreview((p) => !p)}
                     className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
                       showPreview
                         ? "bg-white text-black"
                         : "bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white"
                     }`}
                   >
-                    {showPreview ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                    {showPreview ? (
+                      <EyeOff className="w-3 h-3" />
+                    ) : (
+                      <Eye className="w-3 h-3" />
+                    )}
                     {showPreview ? "Edit" : "Preview"}
                   </button>
                 </div>
@@ -474,7 +559,9 @@ export default function AdminPanel() {
                     {form.content ? (
                       <MarkdownRenderer content={form.content} />
                     ) : (
-                      <p className="text-zinc-600 text-sm">Nothing to preview yet. Write some content first.</p>
+                      <p className="text-zinc-600 text-sm">
+                        Nothing to preview yet. Write some content first.
+                      </p>
                     )}
                   </div>
                 ) : (
@@ -483,14 +570,20 @@ export default function AdminPanel() {
                       <button
                         type="button"
                         onClick={() => {
-                          const ta = document.getElementById('content-editor') as HTMLTextAreaElement;
+                          const ta = document.getElementById(
+                            "content-editor",
+                          ) as HTMLTextAreaElement;
                           if (ta) {
                             const start = ta.selectionStart;
                             const end = ta.selectionEnd;
                             const sel = ta.value.substring(start, end);
                             const before = ta.value.substring(0, start);
                             const after = ta.value.substring(end);
-                            setForm(prev => ({ ...prev, content: before + '**' + (sel || 'bold') + '**' + after }));
+                            setForm((prev) => ({
+                              ...prev,
+                              content:
+                                before + "**" + (sel || "bold") + "**" + after,
+                            }));
                           }
                         }}
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs font-bold transition-colors"
@@ -501,14 +594,20 @@ export default function AdminPanel() {
                       <button
                         type="button"
                         onClick={() => {
-                          const ta = document.getElementById('content-editor') as HTMLTextAreaElement;
+                          const ta = document.getElementById(
+                            "content-editor",
+                          ) as HTMLTextAreaElement;
                           if (ta) {
                             const start = ta.selectionStart;
                             const end = ta.selectionEnd;
                             const sel = ta.value.substring(start, end);
                             const before = ta.value.substring(0, start);
                             const after = ta.value.substring(end);
-                            setForm(prev => ({ ...prev, content: before + '*' + (sel || 'italic') + '*' + after }));
+                            setForm((prev) => ({
+                              ...prev,
+                              content:
+                                before + "*" + (sel || "italic") + "*" + after,
+                            }));
                           }
                         }}
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs italic transition-colors"
@@ -519,7 +618,12 @@ export default function AdminPanel() {
                       <div className="w-px h-5 bg-white/10" />
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n## Heading\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content: prev.content + "\n## Heading\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="Heading"
                       >
@@ -527,7 +631,12 @@ export default function AdminPanel() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n### Subheading\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content: prev.content + "\n### Subheading\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="Subheading"
                       >
@@ -536,7 +645,13 @@ export default function AdminPanel() {
                       <div className="w-px h-5 bg-white/10" />
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n- Item 1\n- Item 2\n- Item 3\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content:
+                              prev.content + "\n- Item 1\n- Item 2\n- Item 3\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="List"
                       >
@@ -544,7 +659,14 @@ export default function AdminPanel() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n1. First\n2. Second\n3. Third\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content:
+                              prev.content +
+                              "\n1. First\n2. Second\n3. Third\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="Numbered List"
                       >
@@ -552,7 +674,12 @@ export default function AdminPanel() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n> Blockquote\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content: prev.content + "\n> Blockquote\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="Quote"
                       >
@@ -562,9 +689,14 @@ export default function AdminPanel() {
                       <button
                         type="button"
                         onClick={() => {
-                          const url = prompt('Enter URL:');
-                          const text = prompt('Enter link text:') || 'Click here';
-                          if (url) setForm(prev => ({ ...prev, content: prev.content + `[${text}](${url})` }));
+                          const url = prompt("Enter URL:");
+                          const text =
+                            prompt("Enter link text:") || "Click here";
+                          if (url)
+                            setForm((prev) => ({
+                              ...prev,
+                              content: prev.content + `[${text}](${url})`,
+                            }));
                         }}
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="Insert Link"
@@ -573,7 +705,13 @@ export default function AdminPanel() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n![Alt text](image-url)\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content:
+                              prev.content + "\n![Alt text](image-url)\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="Image"
                       >
@@ -581,16 +719,26 @@ export default function AdminPanel() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n```\ncode block\n```\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content: prev.content + "\n```\ncode block\n```\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs font-mono transition-colors"
                         title="Code Block"
                       >
-                        {'<>'}
+                        {"<>"}
                       </button>
                       <div className="w-px h-5 bg-white/10" />
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n---\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content: prev.content + "\n---\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="Horizontal Rule / Separator"
                       >
@@ -598,7 +746,12 @@ export default function AdminPanel() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setForm(prev => ({ ...prev, content: prev.content + '\n&nbsp;\n' }))}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            content: prev.content + "\n&nbsp;\n",
+                          }))
+                        }
                         className="px-2.5 py-1.5 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white text-xs transition-colors"
                         title="Add Extra Space"
                       >
@@ -609,14 +762,20 @@ export default function AdminPanel() {
                       id="content-editor"
                       value={form.content}
                       onChange={(e) =>
-                        setForm((prev) => ({ ...prev, content: e.target.value }))
+                        setForm((prev) => ({
+                          ...prev,
+                          content: e.target.value,
+                        }))
                       }
                       rows={24}
                       className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-white/30 transition-colors resize-y font-mono leading-relaxed whitespace-pre-wrap"
                       placeholder={`## Getting Started\n\nWrite your blog content here using **Markdown**...\n\nSingle Enter = line break\nDouble Enter = new paragraph\n\n### Tips\n\n- Use **bold** and *italic* for emphasis\n- Add [links](https://example.com) easily\n- Insert images with ![alt](url)\n\n> Pro tip: Click Preview to see how it looks!`}
                     />
                     <p className="text-zinc-600 text-xs mt-1.5">
-                      Single Enter = line break, Double Enter = new paragraph. Supports: **bold**, *italic*, ## headings, - lists, [links](url), ![images](url), {'>'} quotes, ```code```, ---separator, tables, HTML
+                      Single Enter = line break, Double Enter = new paragraph.
+                      Supports: **bold**, *italic*, ## headings, - lists,
+                      [links](url), ![images](url), {">"} quotes, ```code```,
+                      ---separator, tables, HTML
                     </p>
                   </>
                 )}
@@ -689,7 +848,10 @@ export default function AdminPanel() {
                     type="text"
                     value={form.image_url}
                     onChange={(e) =>
-                      setForm((prev) => ({ ...prev, image_url: e.target.value }))
+                      setForm((prev) => ({
+                        ...prev,
+                        image_url: e.target.value,
+                      }))
                     }
                     className="w-full bg-zinc-800 border border-white/10 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-white/30 transition-colors font-mono"
                     placeholder="Or paste image URL..."
@@ -837,6 +999,35 @@ export default function AdminPanel() {
         </div>
       )}
 
+      {/* Delete Message Confirmation Modal */}
+      {deleteMessageConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+          <div className="bg-zinc-900 border border-white/10 rounded-2xl p-6 max-w-sm w-full">
+            <h3 className="text-white font-semibold text-lg mb-2">
+              Delete Message
+            </h3>
+            <p className="text-zinc-400 text-sm mb-6">
+              Are you sure you want to delete this message? This action cannot
+              be undone.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setDeleteMessageConfirm(null)}
+                className="flex-1 bg-zinc-800 border border-white/10 text-white rounded-lg py-2.5 text-sm hover:bg-zinc-700 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDeleteMessage(deleteMessageConfirm)}
+                className="flex-1 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg py-2.5 text-sm hover:bg-red-500/20 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="sticky top-0 z-40 bg-black/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
@@ -848,18 +1039,20 @@ export default function AdminPanel() {
               <h1 className="text-white font-semibold text-sm">
                 Playzor Admin
               </h1>
-              <p className="text-zinc-500 text-xs">Blog Management</p>
+              <p className="text-zinc-500 text-xs">Management Panel</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <button
-              onClick={handleNewPost}
-              className="flex items-center gap-2 bg-white text-black font-semibold rounded-lg px-4 py-2 text-sm hover:bg-zinc-200 transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              New Post
-            </button>
+            {activeTab === "blogs" && (
+              <button
+                onClick={handleNewPost}
+                className="flex items-center gap-2 bg-white text-black font-semibold rounded-lg px-4 py-2 text-sm hover:bg-zinc-200 transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                New Post
+              </button>
+            )}
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm border border-white/10 rounded-lg px-3 py-2"
@@ -868,139 +1061,384 @@ export default function AdminPanel() {
             </button>
           </div>
         </div>
+
+        {/* Tabs */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex gap-1">
+            <button
+              onClick={() => setActiveTab("blogs")}
+              className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "blogs"
+                  ? "border-white text-white"
+                  : "border-transparent text-zinc-500 hover:text-zinc-300"
+              }`}
+            >
+              <FileText className="w-4 h-4" />
+              Blog Posts
+            </button>
+            <button
+              onClick={() => setActiveTab("messages")}
+              className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === "messages"
+                  ? "border-white text-white"
+                  : "border-transparent text-zinc-500 hover:text-zinc-300"
+              }`}
+            >
+              <MessageSquare className="w-4 h-4" />
+              Messages
+              {messages.filter((m) => !m.read).length > 0 && (
+                <span className="bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {messages.filter((m) => !m.read).length}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
-            <p className="text-zinc-500 text-xs mb-1">Total Posts</p>
-            <p className="text-white text-2xl font-bold">{blogs.length}</p>
-          </div>
-          <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
-            <p className="text-zinc-500 text-xs mb-1">Published</p>
-            <p className="text-emerald-400 text-2xl font-bold">
-              {blogs.filter((b) => b.published).length}
-            </p>
-          </div>
-          <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
-            <p className="text-zinc-500 text-xs mb-1">Drafts</p>
-            <p className="text-amber-400 text-2xl font-bold">
-              {blogs.filter((b) => !b.published).length}
-            </p>
-          </div>
-          <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
-            <p className="text-zinc-500 text-xs mb-1">Categories</p>
-            <p className="text-white text-2xl font-bold">
-              {new Set(blogs.map((b) => b.category)).size}
-            </p>
-          </div>
-        </div>
-
-        {/* Blog List */}
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-white animate-spin" />
-          </div>
-        ) : blogs.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
-              <FileText className="w-8 h-8 text-zinc-600" />
+        {activeTab === "blogs" ? (
+          <>
+            {/* Stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+              <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
+                <p className="text-zinc-500 text-xs mb-1">Total Posts</p>
+                <p className="text-white text-2xl font-bold">{blogs.length}</p>
+              </div>
+              <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
+                <p className="text-zinc-500 text-xs mb-1">Published</p>
+                <p className="text-emerald-400 text-2xl font-bold">
+                  {blogs.filter((b) => b.published).length}
+                </p>
+              </div>
+              <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
+                <p className="text-zinc-500 text-xs mb-1">Drafts</p>
+                <p className="text-amber-400 text-2xl font-bold">
+                  {blogs.filter((b) => !b.published).length}
+                </p>
+              </div>
+              <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
+                <p className="text-zinc-500 text-xs mb-1">Categories</p>
+                <p className="text-white text-2xl font-bold">
+                  {new Set(blogs.map((b) => b.category)).size}
+                </p>
+              </div>
             </div>
-            <h3 className="text-white font-semibold text-lg mb-1">
-              No posts yet
-            </h3>
-            <p className="text-zinc-500 text-sm mb-6">
-              Create your first blog post to get started.
-            </p>
-            <button
-              onClick={handleNewPost}
-              className="inline-flex items-center gap-2 bg-white text-black font-semibold rounded-lg px-5 py-2.5 text-sm hover:bg-zinc-200 transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              Create First Post
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {blogs.map((blog) => (
-              <div
-                key={blog.id}
-                className="bg-zinc-900 border border-white/5 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-white/10 transition-colors"
-              >
-                {/* Thumbnail */}
-                {blog.image_url ? (
-                  <div className="relative w-full sm:w-20 h-32 sm:h-14 rounded-lg overflow-hidden flex-shrink-0 border border-white/10">
-                    <Image
-                      src={blog.image_url}
-                      alt={blog.title}
-                      fill
-                      className="object-cover"
-                      sizes="80px"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-full sm:w-20 h-32 sm:h-14 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-5 h-5 text-zinc-600" />
-                  </div>
-                )}
 
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-white font-medium text-sm truncate">
-                      {blog.title}
-                    </h3>
-                    {blog.published ? (
-                      <span className="flex items-center gap-1 text-emerald-400 text-xs flex-shrink-0">
-                        <Eye className="w-3 h-3" />
-                        Live
-                      </span>
+            {/* Blog List */}
+            {loading ? (
+              <div className="flex items-center justify-center py-20">
+                <Loader2 className="w-8 h-8 text-white animate-spin" />
+              </div>
+            ) : blogs.length === 0 ? (
+              <div className="text-center py-20">
+                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
+                  <FileText className="w-8 h-8 text-zinc-600" />
+                </div>
+                <h3 className="text-white font-semibold text-lg mb-1">
+                  No posts yet
+                </h3>
+                <p className="text-zinc-500 text-sm mb-6">
+                  Create your first blog post to get started.
+                </p>
+                <button
+                  onClick={handleNewPost}
+                  className="inline-flex items-center gap-2 bg-white text-black font-semibold rounded-lg px-5 py-2.5 text-sm hover:bg-zinc-200 transition-colors"
+                >
+                  <Plus className="w-4 h-4" />
+                  Create First Post
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {blogs.map((blog) => (
+                  <div
+                    key={blog.id}
+                    className="bg-zinc-900 border border-white/5 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-white/10 transition-colors"
+                  >
+                    {/* Thumbnail */}
+                    {blog.image_url ? (
+                      <div className="relative w-full sm:w-20 h-32 sm:h-14 rounded-lg overflow-hidden flex-shrink-0 border border-white/10">
+                        <Image
+                          src={blog.image_url}
+                          alt={blog.title}
+                          fill
+                          className="object-cover"
+                          sizes="80px"
+                        />
+                      </div>
                     ) : (
-                      <span className="flex items-center gap-1 text-amber-400 text-xs flex-shrink-0">
-                        <EyeOff className="w-3 h-3" />
-                        Draft
-                      </span>
+                      <div className="w-full sm:w-20 h-32 sm:h-14 rounded-lg bg-zinc-800 flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-5 h-5 text-zinc-600" />
+                      </div>
+                    )}
+
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-white font-medium text-sm truncate">
+                          {blog.title}
+                        </h3>
+                        {blog.published ? (
+                          <span className="flex items-center gap-1 text-emerald-400 text-xs flex-shrink-0">
+                            <Eye className="w-3 h-3" />
+                            Live
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-1 text-amber-400 text-xs flex-shrink-0">
+                            <EyeOff className="w-3 h-3" />
+                            Draft
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-zinc-500 text-xs truncate">
+                        {blog.category} &middot; {blog.author} &middot;{" "}
+                        {new Date(blog.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto justify-end">
+                      {blog.published && (
+                        <a
+                          href={`/blog/${blog.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white transition-colors"
+                          title="View"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      )}
+                      <button
+                        onClick={() => handleEdit(blog)}
+                        className="p-2 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white transition-colors"
+                        title="Edit"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => setDeleteConfirm(blog.id)}
+                        className="p-2 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-red-400 transition-colors"
+                        title="Delete"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {/* Messages Stats */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+              <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
+                <p className="text-zinc-500 text-xs mb-1">Total Messages</p>
+                <p className="text-white text-2xl font-bold">
+                  {messages.length}
+                </p>
+              </div>
+              <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
+                <p className="text-zinc-500 text-xs mb-1">Unread</p>
+                <p className="text-red-400 text-2xl font-bold">
+                  {messages.filter((m) => !m.read).length}
+                </p>
+              </div>
+              <div className="bg-zinc-900 border border-white/5 rounded-xl p-4">
+                <p className="text-zinc-500 text-xs mb-1">Read</p>
+                <p className="text-emerald-400 text-2xl font-bold">
+                  {messages.filter((m) => m.read).length}
+                </p>
+              </div>
+            </div>
+
+            {/* Messages List */}
+            {messagesLoading ? (
+              <div className="flex items-center justify-center py-20">
+                <Loader2 className="w-8 h-8 text-white animate-spin" />
+              </div>
+            ) : messages.length === 0 ? (
+              <div className="text-center py-20">
+                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
+                  <MessageSquare className="w-8 h-8 text-zinc-600" />
+                </div>
+                <h3 className="text-white font-semibold text-lg mb-1">
+                  No messages yet
+                </h3>
+                <p className="text-zinc-500 text-sm">
+                  Messages from the contact form will appear here.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {messages.map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={`bg-zinc-900 border rounded-xl overflow-hidden transition-colors ${
+                      msg.read
+                        ? "border-white/5"
+                        : "border-blue-500/20 bg-blue-500/[0.02]"
+                    }`}
+                  >
+                    {/* Message Header */}
+                    <div
+                      className="p-4 sm:p-5 cursor-pointer hover:bg-white/[0.02] transition-colors"
+                      onClick={() =>
+                        setExpandedMessage(
+                          expandedMessage === msg.id ? null : msg.id,
+                        )
+                      }
+                    >
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                        {/* Status indicator */}
+                        <div className="flex-shrink-0">
+                          {msg.read ? (
+                            <CheckCircle className="w-5 h-5 text-zinc-600" />
+                          ) : (
+                            <Circle className="w-5 h-5 text-blue-400 fill-blue-400" />
+                          )}
+                        </div>
+
+                        {/* Info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="text-white font-medium text-sm">
+                              {msg.name}
+                            </h3>
+                            {!msg.read && (
+                              <span className="text-[10px] font-bold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full">
+                                NEW
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-zinc-500 text-xs truncate">
+                            {msg.message}
+                          </p>
+                        </div>
+
+                        {/* Meta */}
+                        <div className="flex items-center gap-3 flex-shrink-0 text-zinc-500 text-xs">
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {new Date(msg.created_at).toLocaleDateString()}{" "}
+                            {new Date(msg.created_at).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Expanded Details */}
+                    {expandedMessage === msg.id && (
+                      <div className="border-t border-white/5 p-4 sm:p-5 space-y-4">
+                        {/* Contact Details Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                          <div className="bg-black/30 rounded-lg p-3">
+                            <div className="flex items-center gap-2 text-zinc-500 text-xs mb-1">
+                              <Mail className="w-3 h-3" />
+                              Email
+                            </div>
+                            <a
+                              href={`mailto:${msg.email}`}
+                              className="text-white text-sm hover:text-blue-400 transition-colors break-all"
+                            >
+                              {msg.email}
+                            </a>
+                          </div>
+                          <div className="bg-black/30 rounded-lg p-3">
+                            <div className="flex items-center gap-2 text-zinc-500 text-xs mb-1">
+                              <Phone className="w-3 h-3" />
+                              Phone
+                            </div>
+                            <p className="text-white text-sm">
+                              {msg.phone || "Not provided"}
+                            </p>
+                          </div>
+                          <div className="bg-black/30 rounded-lg p-3">
+                            <div className="flex items-center gap-2 text-zinc-500 text-xs mb-1">
+                              <Globe className="w-3 h-3" />
+                              IP Address
+                            </div>
+                            <p className="text-white text-sm font-mono">
+                              {msg.ip_address || "Unknown"}
+                            </p>
+                          </div>
+                          <div className="bg-black/30 rounded-lg p-3">
+                            <div className="flex items-center gap-2 text-zinc-500 text-xs mb-1">
+                              <Clock className="w-3 h-3" />
+                              Received
+                            </div>
+                            <p className="text-white text-sm">
+                              {new Date(msg.created_at).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Full Message */}
+                        <div className="bg-black/30 rounded-lg p-4">
+                          <p className="text-zinc-500 text-xs mb-2 font-medium">
+                            Message
+                          </p>
+                          <p className="text-white text-sm leading-relaxed whitespace-pre-wrap">
+                            {msg.message}
+                          </p>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex items-center gap-2 pt-1">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleToggleRead(msg.id, msg.read);
+                            }}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                              msg.read
+                                ? "bg-blue-500/10 border border-blue-500/20 text-blue-400 hover:bg-blue-500/20"
+                                : "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
+                            }`}
+                          >
+                            {msg.read ? (
+                              <>
+                                <Circle className="w-3 h-3" />
+                                Mark as Unread
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle className="w-3 h-3" />
+                                Mark as Read
+                              </>
+                            )}
+                          </button>
+                          <a
+                            href={`mailto:${msg.email}?subject=Re: Your message to Playzor&body=Hi ${msg.name},%0D%0A%0D%0AThank you for reaching out to us.%0D%0A%0D%0A`}
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-white/5 border border-white/10 text-zinc-300 hover:text-white hover:bg-white/10 transition-colors"
+                          >
+                            <Mail className="w-3 h-3" />
+                            Reply via Email
+                          </a>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDeleteMessageConfirm(msg.id);
+                            }}
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-colors ml-auto"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                            Delete
+                          </button>
+                        </div>
+                      </div>
                     )}
                   </div>
-                  <p className="text-zinc-500 text-xs truncate">
-                    {blog.category} &middot; {blog.author} &middot;{" "}
-                    {new Date(blog.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-
-                {/* Actions */}
-                <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto justify-end">
-                  {blog.published && (
-                    <a
-                      href={`/blog/${blog.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white transition-colors"
-                      title="View"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
-                  <button
-                    onClick={() => handleEdit(blog)}
-                    className="p-2 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white transition-colors"
-                    title="Edit"
-                  >
-                    <Edit2 className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setDeleteConfirm(blog.id)}
-                    className="p-2 rounded-lg bg-zinc-800 border border-white/10 text-zinc-400 hover:text-red-400 transition-colors"
-                    title="Delete"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </div>

@@ -131,6 +131,14 @@ export default function Footer() {
                   Blog
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
 
