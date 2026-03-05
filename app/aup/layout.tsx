@@ -32,6 +32,20 @@ export const metadata: Metadata = {
     url: "https://playzor.me/aup",
     type: "website",
     siteName: "Playzor",
+    images: [
+      {
+        url: "https://playzor.me/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Playzor Acceptable Use Policy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Acceptable Use Policy | Playzor",
+    description: "Playzor AUP — Permitted and prohibited use of hosting services.",
+    images: ["https://playzor.me/logo.png"],
   },
   robots: { index: true, follow: true },
 };

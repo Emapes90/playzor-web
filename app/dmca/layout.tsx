@@ -32,6 +32,21 @@ export const metadata: Metadata = {
     url: "https://playzor.me/dmca",
     type: "website",
     siteName: "Playzor",
+    images: [
+      {
+        url: "https://playzor.me/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Playzor DMCA Policy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Copyright & DMCA Policy | Playzor",
+    description:
+      "Playzor DMCA Policy — copyright infringement claims and IP handling.",
+    images: ["https://playzor.me/logo.png"],
   },
   robots: { index: true, follow: true },
 };

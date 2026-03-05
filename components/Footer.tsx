@@ -67,6 +67,38 @@ export default function Footer() {
                   Minecraft Hosting
                 </a>
               </li>
+              <li>
+                <Link
+                  href="/minecraft-server-hosting"
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  Minecraft Server Hosting
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/game-server-hosting"
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  Game Server Hosting
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/minecraft-server-hosting-india"
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  Minecraft Hosting India
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/game-server-hosting-india"
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  Game Hosting India
+                </Link>
+              </li>
             </ul>
           </div>
 

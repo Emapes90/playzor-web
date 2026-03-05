@@ -41,6 +41,21 @@ export const metadata: Metadata = {
     url: "https://playzor.me/about",
     type: "website",
     siteName: "Playzor",
+    images: [
+      {
+        url: "https://playzor.me/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "About Playzor - India's Leading Game Server Hosting",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Playzor | India's #1 Game Server Hosting Company",
+    description:
+      "Learn about Playzor — India's leading game server hosting provider. Founded by gamers for gamers.",
+    images: ["https://playzor.me/logo.png"],
   },
   robots: { index: true, follow: true },
 };

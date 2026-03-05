@@ -36,6 +36,11 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Playzor",
   },
+  twitter: {
+    card: "summary",
+    title: "Refund Policy | Playzor",
+    description: "Playzor Refund Policy — transparent, fair refund process.",
+  },
   robots: { index: true, follow: true },
 };
 

@@ -4,8 +4,40 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function SLA() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://playzor.me/sla/#webpage",
+        url: "https://playzor.me/sla",
+        name: "Service Level Agreement | Playzor",
+        description:
+          "Playzor SLA — 99.9% uptime guarantee and support response objectives.",
+        isPartOf: { "@id": "https://playzor.me/#website" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://playzor.me/sla/#breadcrumb",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://playzor.me",
+          },
+          { "@type": "ListItem", position: 2, name: "SLA" },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="bg-black min-h-screen text-zinc-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <section className="pt-28 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6">
@@ -77,9 +109,7 @@ export default function SLA() {
               <ul className="list-disc pl-4 sm:pl-6 space-y-2 mt-4">
                 <li>
                   Maintenance is generally announced{" "}
-                  <strong className="text-white">
-                    2–24 hours in advance
-                  </strong>{" "}
+                  <strong className="text-white">2–24 hours in advance</strong>{" "}
                   when possible.
                 </li>
                 <li>
@@ -110,9 +140,7 @@ export default function SLA() {
                 <li>Data center partners</li>
                 <li>Network transit providers</li>
                 <li>Cloud infrastructure providers</li>
-                <li>
-                  Security and DNS providers such as Cloudflare
-                </li>
+                <li>Security and DNS providers such as Cloudflare</li>
               </ul>
               <p className="mt-4">
                 Downtime caused by third-party infrastructure is outside direct
@@ -125,9 +153,7 @@ export default function SLA() {
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">
                 4. Support Response Objectives
               </h2>
-              <p>
-                Playzor aims to respond to support inquiries within:
-              </p>
+              <p>Playzor aims to respond to support inquiries within:</p>
               <ul className="list-disc pl-4 sm:pl-6 space-y-2 mt-4">
                 <li>
                   <strong className="text-white">
@@ -175,8 +201,8 @@ export default function SLA() {
                   based solely on uptime variations.
                 </li>
                 <li>
-                  Refund eligibility remains governed exclusively by the official
-                  Refund Policy.
+                  Refund eligibility remains governed exclusively by the
+                  official Refund Policy.
                 </li>
               </ul>
             </section>

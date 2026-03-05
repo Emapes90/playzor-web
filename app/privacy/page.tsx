@@ -4,8 +4,40 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function Privacy() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://playzor.me/privacy/#webpage",
+        url: "https://playzor.me/privacy",
+        name: "Privacy Policy | Playzor",
+        description:
+          "Playzor Privacy Policy — how we protect and handle your data.",
+        isPartOf: { "@id": "https://playzor.me/#website" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://playzor.me/privacy/#breadcrumb",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://playzor.me",
+          },
+          { "@type": "ListItem", position: 2, name: "Privacy Policy" },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="bg-black min-h-screen text-zinc-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <section className="pt-28 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6">

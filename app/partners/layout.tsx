@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     siteName: "Playzor",
     images: [
       {
-        url: "/logo.png",
+        url: "https://playzor.me/logo.png",
         width: 1200,
         height: 630,
         alt: "Playzor Partner Program",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "Become a Playzor Partner | Earn Money with Game Hosting",
     description:
       "Join India's #1 game hosting affiliate program. Earn commissions promoting Playzor.",
-    images: ["/logo.png"],
+    images: ["https://playzor.me/logo.png"],
   },
   robots: { index: true, follow: true },
 };

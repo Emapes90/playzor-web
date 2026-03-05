@@ -64,8 +64,9 @@ const nextConfig: NextConfig = {
             value: "on",
           },
           {
-            key: "Link",
-            value: '<https://playzor.me>; rel="canonical"',
+            key: "Cache-Control",
+            value:
+              "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800",
           },
         ],
       },
@@ -99,6 +100,38 @@ const nextConfig: NextConfig = {
             value: "public, max-age=86400, s-maxage=86400",
           },
         ],
+      },
+      // Image caching for SEO performance
+      {
+        source: "/:path*.(ico|png|jpg|jpeg|gif|svg|webp)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      // Font caching for CLS optimization
+      {
+        source: "/:path*.(woff|woff2|ttf|eot)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
+  // SEO-optimized redirects
+  async redirects() {
+    return [
+      // Ensure www redirects to non-www (canonical)
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.playzor.me" }],
+        destination: "https://playzor.me/:path*",
+        permanent: true,
       },
     ];
   },

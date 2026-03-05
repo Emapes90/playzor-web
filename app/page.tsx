@@ -17,9 +17,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://playzor.me",
   },
-  other: {
-    "article:modified_time": new Date().toISOString(),
-  },
 };
 
 export default function Home() {
@@ -341,9 +338,9 @@ export default function Home() {
           offers: [
             {
               "@type": "Offer",
-              name: "Iron Plan - 4GB Minecraft Server",
+              name: "Iron Plan - 2GB Minecraft Server",
               description:
-                "4GB RAM, 2 vCore Ryzen 9 7950X, 50GB NVMe SSD, Enterprise DDoS Protection, Unlimited Player Slots, Free Subdomain, 24/7 Support, Instant Setup",
+                "2GB RAM, 1 vCPU Ryzen 9 7950X, 20GB NVMe SSD, Enterprise DDoS Protection, Unlimited Player Slots, Free Subdomain, 24/7 Support, Instant Setup",
               price: "199",
               priceCurrency: "INR",
               priceValidUntil: "2027-12-31",
@@ -371,9 +368,9 @@ export default function Home() {
             },
             {
               "@type": "Offer",
-              name: "Gold Plan - 8GB Minecraft Server",
+              name: "Gold Plan - 4GB Minecraft Server",
               description:
-                "8GB RAM, 3 vCore Ryzen 9 7950X, 100GB NVMe SSD, Enterprise DDoS Protection, Unlimited Player Slots, Free Subdomain, 24/7 Support, Instant Setup",
+                "4GB RAM, 2 vCPU Ryzen 9 7950X, 40GB NVMe SSD, Enterprise DDoS Protection, Unlimited Player Slots, Free Subdomain, 24/7 Support, Instant Setup",
               price: "399",
               priceCurrency: "INR",
               priceValidUntil: "2027-12-31",
@@ -395,9 +392,9 @@ export default function Home() {
             },
             {
               "@type": "Offer",
-              name: "Diamond Plan - 16GB Minecraft Server",
+              name: "Diamond Plan - 8GB Minecraft Server",
               description:
-                "16GB RAM, 4 vCore Ryzen 9 7950X, Unlimited NVMe SSD, Enterprise DDoS Protection, Unlimited Player Slots, Free Subdomain, Priority 24/7 Support, Instant Setup",
+                "8GB RAM, 4 vCPU Ryzen 9 7950X, 60GB NVMe SSD, Enterprise DDoS Protection, Unlimited Player Slots, Free Subdomain, Priority 24/7 Support, Instant Setup",
               price: "599",
               priceCurrency: "INR",
               priceValidUntil: "2027-12-31",
@@ -419,9 +416,9 @@ export default function Home() {
             },
             {
               "@type": "Offer",
-              name: "Netherite Plan - 32GB Minecraft Server",
+              name: "Netherite Plan - 16GB Minecraft Server",
               description:
-                "32GB RAM, 6 vCore Ryzen 9 7950X, Unlimited NVMe SSD, Enterprise DDoS Protection, Unlimited Player Slots, Dedicated IP, Priority 24/7 Support, Instant Setup",
+                "16GB RAM, 6 vCPU Ryzen 9 7950X, 120GB NVMe SSD, Enterprise DDoS Protection, Unlimited Player Slots, Dedicated IP, Priority 24/7 Support, Instant Setup",
               price: "1199",
               priceCurrency: "INR",
               priceValidUntil: "2027-12-31",
@@ -573,7 +570,7 @@ export default function Home() {
             name: "How much does Minecraft server hosting cost in India?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Playzor offers premium Minecraft server hosting starting at ₹199/month for the Iron Plan (4GB RAM, 2 vCore Ryzen 9, 50GB NVMe). Our Gold Plan is ₹399/month (8GB RAM), Diamond Plan is ₹599/month (16GB RAM), and Netherite Plan is ₹1199/month (32GB RAM) with unlimited NVMe storage. All plans include DDoS protection, unlimited player slots, and 24/7 support.",
+              text: "Playzor offers premium Minecraft server hosting starting at ₹199/month for the Iron Plan (2GB RAM, 1 vCPU Ryzen 9, 20GB NVMe). Our Gold Plan is ₹399/month (4GB RAM), Diamond Plan is ₹599/month (8GB RAM), and Netherite Plan is ₹1199/month (16GB RAM). All plans include DDoS protection, unlimited player slots, and 24/7 support.",
             },
           },
           {
@@ -637,7 +634,7 @@ export default function Home() {
             name: "What is the cheapest Minecraft hosting in India?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Playzor offers the cheapest premium Minecraft hosting in India starting at just ₹199/month. This Iron Plan includes 4GB RAM, 2 vCore Ryzen 9 7950X CPU, 50GB NVMe SSD storage, enterprise DDoS protection, unlimited player slots, free subdomain, automatic backups, and 24/7 support. No hidden fees, no setup charges.",
+              text: "Playzor offers the cheapest premium Minecraft hosting in India starting at just ₹199/month. This Iron Plan includes 2GB RAM, 1 vCPU Ryzen 9 7950X CPU, 20GB NVMe SSD storage, enterprise DDoS protection, unlimited player slots, free subdomain, automatic backups, and 24/7 support. No hidden fees, no setup charges.",
             },
           },
           {
@@ -661,7 +658,7 @@ export default function Home() {
             name: "Does Playzor support Pixelmon and Pokemon mods?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes! Playzor is one of the best hosts for Pixelmon and Cobblemon servers in India. We recommend our Gold Plan (8GB RAM, ₹399/mo) or higher for Pixelmon/Cobblemon servers for the best performance. One-click installation is available. Our Ryzen 9 processors handle the CPU-intensive nature of Pixelmon perfectly.",
+              text: "Yes! Playzor is one of the best hosts for Pixelmon and Cobblemon servers in India. We recommend our Gold Plan (4GB RAM, ₹399/mo) or higher for Pixelmon/Cobblemon servers for the best performance. One-click installation is available. Our Ryzen 9 processors handle the CPU-intensive nature of Pixelmon perfectly.",
             },
           },
           {
@@ -701,7 +698,7 @@ export default function Home() {
             name: "How many players can join my Playzor Minecraft server?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "All Playzor plans come with unlimited player slots at no extra cost! The practical player count depends on your plan: Iron (4GB) supports ~20-30 players vanilla, Gold (8GB) supports ~50-80 players, Diamond (16GB) supports ~100-150 players, and Netherite (32GB) supports ~200+ players. Modded servers may need more RAM per player.",
+              text: "All Playzor plans come with unlimited player slots at no extra cost! The practical player count depends on your plan: Iron (2GB) supports ~10-20 players vanilla, Gold (4GB) supports ~30-50 players, Diamond (8GB) supports ~50-80 players, and Netherite (16GB) supports ~100+ players. Modded servers may need more RAM per player.",
             },
           },
           {
@@ -749,7 +746,7 @@ export default function Home() {
             name: "Can I host a Minecraft network (BungeeCord/Velocity) on Playzor?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Yes! Playzor supports Minecraft network hosting with BungeeCord, Waterfall, and Velocity proxy servers. You can create multi-server networks with separate lobby, survival, minigames, and other game modes. Our Netherite plan (32GB, ₹1199/mo) is recommended for network hosting, or you can have multiple servers across different plans.",
+              text: "Yes! Playzor supports Minecraft network hosting with BungeeCord, Waterfall, and Velocity proxy servers. You can create multi-server networks with separate lobby, survival, minigames, and other game modes. Our Netherite plan (16GB, ₹1199/mo) is recommended for network hosting, or you can have multiple servers across different plans.",
             },
           },
           {
@@ -866,7 +863,7 @@ export default function Home() {
             position: 1,
             name: "Iron Plan - ₹199/month",
             description:
-              "4GB RAM, 2 vCore Ryzen 9, 50GB NVMe SSD - Best for small SMPs and vanilla servers",
+              "2GB RAM, 1 vCPU Ryzen 9, 20GB NVMe SSD - Best for small SMPs and vanilla servers",
             url: "https://checkout.playzor.me",
           },
           {
@@ -874,7 +871,7 @@ export default function Home() {
             position: 2,
             name: "Gold Plan - ₹399/month",
             description:
-              "8GB RAM, 3 vCore Ryzen 9, 100GB NVMe SSD - Best for modded servers and medium communities",
+              "4GB RAM, 2 vCPU Ryzen 9, 40GB NVMe SSD - Best for modded servers and medium communities",
             url: "https://checkout.playzor.me",
           },
           {
@@ -882,7 +879,7 @@ export default function Home() {
             position: 3,
             name: "Diamond Plan - ₹599/month",
             description:
-              "16GB RAM, 4 vCore Ryzen 9, Unlimited NVMe - Best for large servers and heavy modpacks",
+              "8GB RAM, 4 vCPU Ryzen 9, 60GB NVMe SSD - Best for large servers and heavy modpacks",
             url: "https://checkout.playzor.me",
           },
           {
@@ -890,7 +887,7 @@ export default function Home() {
             position: 4,
             name: "Netherite Plan - ₹1199/month",
             description:
-              "32GB RAM, 6 vCore Ryzen 9, Unlimited NVMe - Best for networks and enterprise servers",
+              "16GB RAM, 6 vCPU Ryzen 9, 120GB NVMe SSD - Best for networks and enterprise servers",
             url: "https://checkout.playzor.me",
           },
         ],
@@ -924,7 +921,7 @@ export default function Home() {
             "@type": "HowToStep",
             position: 1,
             name: "Choose Your Plan",
-            text: "Visit checkout.playzor.me and select the hosting plan that suits your needs. The Iron Plan (₹199/mo, 4GB RAM) is perfect for beginners and small groups.",
+            text: "Visit checkout.playzor.me and select the hosting plan that suits your needs. The Iron Plan (₹199/mo, 2GB RAM) is perfect for beginners and small groups.",
             url: "https://checkout.playzor.me",
           },
           {

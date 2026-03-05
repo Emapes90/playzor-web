@@ -35,6 +35,11 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Playzor",
   },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | Playzor",
+    description: "Playzor Privacy Policy — how we protect your data.",
+  },
   robots: { index: true, follow: true },
 };
 

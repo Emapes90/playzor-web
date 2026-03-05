@@ -15,8 +15,49 @@ import {
 } from "lucide-react";
 
 export default function About() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": "https://playzor.me/about/#webpage",
+        url: "https://playzor.me/about",
+        name: "About Playzor - India's Leading Game Server Hosting Company",
+        description: "Learn about Playzor, India's leading premium game server hosting provider.",
+        isPartOf: { "@id": "https://playzor.me/#website" },
+        publisher: { "@id": "https://playzor.me/#organization" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://playzor.me/about/#breadcrumb",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://playzor.me" },
+          { "@type": "ListItem", position: 2, name: "About Us" },
+        ],
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://playzor.me/#organization",
+        name: "Playzor",
+        url: "https://playzor.me",
+        logo: "https://playzor.me/logo.png",
+        description: "India's #1 Premium Minecraft and Game Server Hosting Provider",
+        foundingDate: "2024",
+        areaServed: "Worldwide",
+        sameAs: [
+          "https://discord.gg/WZukZ9VFhX",
+          "https://www.youtube.com/channel/UCL9-fxglFZ8_sG4CO9Vqt3Q",
+        ],
+      },
+    ],
+  };
+
   return (
     <main role="main" aria-label="About Playzor - India's Leading Game Server Hosting Company" className="bg-black min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       {/* Hero Section */}

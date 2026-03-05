@@ -4,8 +4,40 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function AUP() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://playzor.me/aup/#webpage",
+        url: "https://playzor.me/aup",
+        name: "Acceptable Use Policy | Playzor",
+        description:
+          "Playzor AUP — permitted and prohibited use of hosting services.",
+        isPartOf: { "@id": "https://playzor.me/#website" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://playzor.me/aup/#breadcrumb",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://playzor.me",
+          },
+          { "@type": "ListItem", position: 2, name: "Acceptable Use Policy" },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="bg-black min-h-screen text-zinc-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <section className="pt-28 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6">
@@ -22,10 +54,10 @@ export default function AUP() {
 
           <p className="mb-6 sm:mb-8">
             This Acceptable Use Policy (&quot;AUP&quot;) defines the permitted
-            and prohibited use of all services provided under the Playzor
-            brand, including Playzor Game Hosting, Playzor Minecraft Hosting,
-            and Playzor Technologies. By using Playzor services, you agree to
-            comply with this policy.
+            and prohibited use of all services provided under the Playzor brand,
+            including Playzor Game Hosting, Playzor Minecraft Hosting, and
+            Playzor Technologies. By using Playzor services, you agree to comply
+            with this policy.
           </p>
 
           <div className="space-y-8 sm:space-y-12 prose prose-invert prose-zinc max-w-none">
@@ -100,8 +132,7 @@ export default function AUP() {
               </h3>
               <ul className="list-disc pl-4 sm:pl-6 space-y-2">
                 <li>
-                  Pirated, cracked, nulled, or unlicensed
-                  plugins/mods/software
+                  Pirated, cracked, nulled, or unlicensed plugins/mods/software
                 </li>
                 <li>Harmful, abusive, or unlawful content</li>
                 <li>Content violating intellectual property rights</li>

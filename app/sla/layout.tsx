@@ -35,6 +35,20 @@ export const metadata: Metadata = {
     url: "https://playzor.me/sla",
     type: "website",
     siteName: "Playzor",
+    images: [
+      {
+        url: "https://playzor.me/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Playzor Service Level Agreement",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Service Level Agreement | Playzor",
+    description: "Playzor SLA — 99.9% uptime guarantee and support response objectives.",
+    images: ["https://playzor.me/logo.png"],
   },
   robots: { index: true, follow: true },
 };

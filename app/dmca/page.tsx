@@ -4,8 +4,40 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function DMCA() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://playzor.me/dmca/#webpage",
+        url: "https://playzor.me/dmca",
+        name: "Copyright & DMCA Policy | Playzor",
+        description:
+          "Playzor DMCA Policy — copyright infringement claims and IP handling.",
+        isPartOf: { "@id": "https://playzor.me/#website" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://playzor.me/dmca/#breadcrumb",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://playzor.me",
+          },
+          { "@type": "ListItem", position: 2, name: "DMCA Policy" },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="bg-black min-h-screen text-zinc-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <section className="pt-28 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6">
@@ -23,9 +55,8 @@ export default function DMCA() {
           <p className="mb-4">
             This Copyright and DMCA Policy explains how Playzor handles
             copyright infringement claims and intellectual property complaints
-            for all services provided under the Playzor brand, including
-            Playzor Game Hosting, Playzor Minecraft Hosting, and Playzor
-            Technologies.
+            for all services provided under the Playzor brand, including Playzor
+            Game Hosting, Playzor Minecraft Hosting, and Playzor Technologies.
           </p>
           <p className="mb-6 sm:mb-8">
             Playzor respects intellectual property rights and expects all
@@ -41,8 +72,7 @@ export default function DMCA() {
               <p>
                 Playzor provides hosting infrastructure only. We do not own,
                 create, distribute, or control customer-uploaded content,
-                including game servers, plugins, mods, files, or
-                configurations.
+                including game servers, plugins, mods, files, or configurations.
               </p>
               <p className="mt-4">
                 Customers are solely responsible for ensuring they have proper
@@ -63,16 +93,12 @@ export default function DMCA() {
               </p>
               <ul className="list-disc pl-4 sm:pl-6 space-y-2 mt-4">
                 <li>Your full name and contact information</li>
-                <li>
-                  Description of copyrighted work claimed to be infringed
-                </li>
+                <li>Description of copyrighted work claimed to be infringed</li>
                 <li>
                   Exact server, URL, or location of alleged infringing content
                 </li>
                 <li>Proof of ownership or authorization</li>
-                <li>
-                  Statement that the complaint is made in good faith
-                </li>
+                <li>Statement that the complaint is made in good faith</li>
                 <li>
                   Statement under penalty of applicable law that information
                   provided is accurate
@@ -92,9 +118,7 @@ export default function DMCA() {
                 <strong className="text-white">Subject Line Suggested:</strong>{" "}
                 Copyright Complaint / DMCA Notice
               </p>
-              <p className="mt-4">
-                Incomplete reports may delay processing.
-              </p>
+              <p className="mt-4">Incomplete reports may delay processing.</p>
             </section>
 
             {/* Section 3 */}
@@ -109,8 +133,8 @@ export default function DMCA() {
                   information if needed.
                 </li>
                 <li>
-                  We may contact the server owner for clarification or proof
-                  of license.
+                  We may contact the server owner for clarification or proof of
+                  license.
                 </li>
                 <li>
                   Temporary suspension of allegedly infringing content or
@@ -118,8 +142,8 @@ export default function DMCA() {
                 </li>
               </ul>
               <p className="mt-4">
-                Playzor does not act as a legal authority but cooperates in
-                good faith with legitimate claims.
+                Playzor does not act as a legal authority but cooperates in good
+                faith with legitimate claims.
               </p>
             </section>
 
@@ -129,8 +153,7 @@ export default function DMCA() {
                 4. Repeat Infringement Policy
               </h2>
               <p>
-                Customers repeatedly involved in copyright violations may
-                face:
+                Customers repeatedly involved in copyright violations may face:
               </p>
               <ul className="list-disc pl-4 sm:pl-6 space-y-2 mt-4">
                 <li>Content removal</li>
@@ -148,9 +171,7 @@ export default function DMCA() {
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">
                 5. Counter Notification
               </h2>
-              <p>
-                If you believe your content was removed incorrectly:
-              </p>
+              <p>If you believe your content was removed incorrectly:</p>
               <ul className="list-disc pl-4 sm:pl-6 space-y-2 mt-4">
                 <li>
                   Contact{" "}
@@ -200,8 +221,7 @@ export default function DMCA() {
               </h2>
               <p>
                 Playzor reserves the right to update this policy at any time.
-                Continued use of services indicates acceptance of updated
-                terms.
+                Continued use of services indicates acceptance of updated terms.
               </p>
             </section>
 

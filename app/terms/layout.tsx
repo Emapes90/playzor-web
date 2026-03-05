@@ -36,6 +36,12 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Playzor",
   },
+  twitter: {
+    card: "summary",
+    title: "Terms of Service | Playzor",
+    description:
+      "Playzor Terms of Service for Minecraft and game server hosting.",
+  },
   robots: { index: true, follow: true },
 };
 

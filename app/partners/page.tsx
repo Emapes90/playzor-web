@@ -14,8 +14,34 @@ import {
 import Link from "next/link";
 
 export default function Partners() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://playzor.me/partners/#webpage",
+        url: "https://playzor.me/partners",
+        name: "Become a Playzor Partner | Earn Money Promoting India's #1 Game Hosting",
+        description: "Join the Playzor Partner Program and earn commissions promoting India's #1 game hosting.",
+        isPartOf: { "@id": "https://playzor.me/#website" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://playzor.me/partners/#breadcrumb",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://playzor.me" },
+          { "@type": "ListItem", position: 2, name: "Partners" },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="bg-black min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <section className="pt-28 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6 relative overflow-hidden">
